@@ -8,15 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="我就不应该想起来要折腾博客的  结论 结论放前面吧 hexo自带的renderer对mathjax较不友好，于是换成了hexo-renderer-markdown-it renderer-marked renderer-markdown-it 其实这并没有解决我的问题，只是看着有commonmark…真正解决我问题的是这个issue 现在的配置基本上是这样: npm install --save">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论mathjax踩坑">
+<meta property="og:title" content="给blog添加MathJax支持时踩的坑">
 <meta property="og:url" content="https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/index.html">
 <meta property="og:site_name" content="Frank">
 <meta property="og:description" content="我就不应该想起来要折腾博客的  结论 结论放前面吧 hexo自带的renderer对mathjax较不友好，于是换成了hexo-renderer-markdown-it renderer-marked renderer-markdown-it 其实这并没有解决我的问题，只是看着有commonmark…真正解决我问题的是这个issue 现在的配置基本上是这样: npm install --save">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-08-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-04-11T21:39:30.000Z">
+<meta property="article:modified_time" content="2025-10-19T20:35:08.563Z">
 <meta property="article:author" content="Frank Li">
-<meta property="article:tag" content="杂项">
+<meta property="article:tag" content="DevOps">
+<meta property="article:tag" content="Misc">
 <meta name="twitter:card" content="summary">
     
     
@@ -37,7 +38,7 @@
       
     
     <!-- title -->
-    <title>论mathjax踩坑</title>
+    <title>给blog添加MathJax支持时踩的坑</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -77,7 +78,7 @@
         .card { width: calc(20% - 20px); }
     }
     .card-container { width: 90%; }
-</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -121,16 +122,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&text=论mathjax踩坑"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=论mathjax踩坑"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&is_video=false&description=论mathjax踩坑"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=论mathjax踩坑&body=Check out this article: https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=论mathjax踩坑"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=论mathjax踩坑"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=论mathjax踩坑"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=论mathjax踩坑"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&name=论mathjax踩坑&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&t=论mathjax踩坑"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&text=给blog添加MathJax支持时踩的坑"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=给blog添加MathJax支持时踩的坑"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&is_video=false&description=给blog添加MathJax支持时踩的坑"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=给blog添加MathJax支持时踩的坑&body=Check out this article: https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=给blog添加MathJax支持时踩的坑"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=给blog添加MathJax支持时踩的坑"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=给blog添加MathJax支持时踩的坑"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=给blog添加MathJax支持时踩的坑"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&name=给blog添加MathJax支持时踩的坑&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&t=给blog添加MathJax支持时踩的坑"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -147,7 +148,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        论mathjax踩坑
+        给blog添加MathJax支持时踩的坑
     </h1>
 
 
@@ -170,7 +171,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/%E6%9D%82%E9%A1%B9/" rel="tag">杂项</a>
+        <a class="tag-link-link" href="/tags/DevOps/" rel="tag">DevOps</a>, <a class="tag-link-link" href="/tags/Misc/" rel="tag">Misc</a>
     </div>
 
 
@@ -244,16 +245,16 @@ npm install --save hexo-renderer-markdown-it markdown-it-mathjax<br>
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&text=论mathjax踩坑"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=论mathjax踩坑"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&is_video=false&description=论mathjax踩坑"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=论mathjax踩坑&body=Check out this article: https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=论mathjax踩坑"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=论mathjax踩坑"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=论mathjax踩坑"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=论mathjax踩坑"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&name=论mathjax踩坑&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&t=论mathjax踩坑"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&text=给blog添加MathJax支持时踩的坑"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=给blog添加MathJax支持时踩的坑"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&is_video=false&description=给blog添加MathJax支持时踩的坑"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=给blog添加MathJax支持时踩的坑&body=Check out this article: https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=给blog添加MathJax支持时踩的坑"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=给blog添加MathJax支持时踩的坑"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=给blog添加MathJax支持时踩的坑"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&title=给blog添加MathJax支持时踩的坑"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&name=给blog添加MathJax支持时踩的坑&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.frankli.site/2019/08/07/Dev/%E8%AE%BAmathjax%E8%B8%A9%E5%9D%91/&t=给blog添加MathJax支持时踩的坑"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -299,20 +300,20 @@ npm install --save hexo-renderer-markdown-it markdown-it-mathjax<br>
 
 
 
-  <link rel="preload" as="style" href="//cdn.bootcss.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+  <link rel="preload" as="style" href="https://cdn.bootcss.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
     <!-- jquery -->
  
-  <script src="//cdn.bootcss.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script> 
+  <script src="https://cdn.bootcss.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script> 
 
 
 
 
-<!-- clipboard -->
 
+  <!-- clipboard -->
   
-    <script src="//cdn.bootcss.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" crossorigin="anonymous"></script> 
+    <script src="https://cdn.bootcss.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" crossorigin="anonymous"></script> 
   
   <script type="text/javascript">
   $(function() {
@@ -337,27 +338,24 @@ npm install --save hexo-renderer-markdown-it markdown-it-mathjax<br>
 
 <script src="/js/main.js"></script>
 
-<!-- search -->
-
-<!-- Google Analytics -->
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131292248-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-131292248-2');
-    </script>
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
 
 
-<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
-<link href="//cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131292248-2"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-131292248-2');
+  </script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+<link href="https://cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
 <style>
   .gt-comment-content:hover {
     box-shadow: none !important;
@@ -371,7 +369,7 @@ npm install --save hexo-renderer-markdown-it markdown-it-mathjax<br>
         var gitalk = document.createElement('script');
         gitalk.type = 'text/javascript';
         gitalk.async = true;
-        gitalk.src = '//cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.js';
+        gitalk.src = 'https://cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gitalk);
         gitalk.onload = function(){
             var gitalk = new Gitalk({
@@ -386,6 +384,7 @@ npm install --save hexo-renderer-markdown-it markdown-it-mathjax<br>
         };
     }());
 </script>
+
 
 </body>
 </html>

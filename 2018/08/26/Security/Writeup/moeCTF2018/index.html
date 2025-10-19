@@ -78,7 +78,7 @@
         .card { width: calc(20% - 20px); }
     }
     .card-container { width: 90%; }
-</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -243,13 +243,13 @@ Parse_URL</p>
 <h4 id="re2">re2</h4>
 <p>拖到ida里</p>
 <p>Strings里找不到flag？实现一下F5出来的逻辑，反过来写一遍(实现一下反函数)</p>
-<p><code>moectf{Qidao_by_fa1con}</code></p>
+<p><code>moectf&#123;Qidao_by_fa1con&#125;</code></p>
 <h4 id="py逆向">py逆向</h4>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/wibiti/uncompyle2.git</span><br><span class="line"><span class="built_in">cd</span> uncompyle2</span><br><span class="line">python setup.py install</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">uncompyle py.pyc</span><br></pre></td></tr></table></figure>
 <p>然后同re2</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">string orig=<span class="string">&quot;bX;oY4Tpe4D8Q2;VRW:&#123;U2;IQIP8fR?@&quot;</span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;orig.<span class="built_in">size</span>();i++)</span><br><span class="line">        orig[i]-=i%<span class="number">4</span>;</span><br><span class="line">    </span><br><span class="line">    cout&lt;&lt;orig;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>base64一下<br>
-<code>moectf{pyC_RE_1S_E@sy}</code></p>
+<code>moectf&#123;pyC_RE_1S_E@sy&#125;</code></p>
 <h4 id="玩过2048么？">玩过2048么？</h4>
 <p>那当然是玩过啦</p>
 <p>但是玩不到4096怎么办啊…<br>
@@ -468,20 +468,20 @@ lsb隐写，密钥在二维码里</p>
 
 
 
-  <link rel="preload" as="style" href="//cdn.bootcss.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+  <link rel="preload" as="style" href="https://cdn.bootcss.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
     <!-- jquery -->
  
-  <script src="//cdn.bootcss.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script> 
+  <script src="https://cdn.bootcss.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script> 
 
 
 
 
-<!-- clipboard -->
 
+  <!-- clipboard -->
   
-    <script src="//cdn.bootcss.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" crossorigin="anonymous"></script> 
+    <script src="https://cdn.bootcss.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" crossorigin="anonymous"></script> 
   
   <script type="text/javascript">
   $(function() {
@@ -506,27 +506,24 @@ lsb隐写，密钥在二维码里</p>
 
 <script src="/js/main.js"></script>
 
-<!-- search -->
-
-<!-- Google Analytics -->
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131292248-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-131292248-2');
-    </script>
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
 
 
-<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
-<link href="//cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131292248-2"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-131292248-2');
+  </script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+<link href="https://cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
 <style>
   .gt-comment-content:hover {
     box-shadow: none !important;
@@ -540,7 +537,7 @@ lsb隐写，密钥在二维码里</p>
         var gitalk = document.createElement('script');
         gitalk.type = 'text/javascript';
         gitalk.async = true;
-        gitalk.src = '//cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.js';
+        gitalk.src = 'https://cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gitalk);
         gitalk.onload = function(){
             var gitalk = new Gitalk({
@@ -555,6 +552,7 @@ lsb隐写，密钥在二维码里</p>
         };
     }());
 </script>
+
 
 </body>
 </html>

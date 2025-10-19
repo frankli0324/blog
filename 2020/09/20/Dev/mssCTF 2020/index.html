@@ -14,10 +14,10 @@
 <meta property="og:description" content="前言 自2018年第一届以来已经办了三届中学生比赛了。无论从出题还是运维角度，mss都已经相对稳定。不出意料，比赛过程中存在着许多问题，况且今年由于疫情原因在线上进行了决赛，但总体而言，在多方努力与支持下，比赛还是相当不错的。 这份总结是对各位的总结的一个大杂烩，段落的作者将以以下的形式给出：  作者id  内容 运维 CTFd部署  Frank  与去年的情况类似，平台最后都基本落到了我手里。平">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-04-11T21:39:30.000Z">
+<meta property="article:modified_time" content="2025-10-19T20:35:57.792Z">
 <meta property="article:author" content="Frank Li">
-<meta property="article:tag" content="mssCTF">
-<meta property="article:tag" content="运维">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="DevOps">
 <meta name="twitter:card" content="summary">
     
     
@@ -78,7 +78,7 @@
         .card { width: calc(20% - 20px); }
     }
     .card-container { width: 90%; }
-</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -171,7 +171,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/mssCTF/" rel="tag">mssCTF</a>, <a class="tag-link-link" href="/tags/%E8%BF%90%E7%BB%B4/" rel="tag">运维</a>
+        <a class="tag-link-link" href="/tags/CTF/" rel="tag">CTF</a>, <a class="tag-link-link" href="/tags/DevOps/" rel="tag">DevOps</a>
     </div>
 
 
@@ -223,7 +223,7 @@
 </blockquote>
 <p>在讨论平台的反作弊措施时有人提出了能否给不同选手分发不同题目文件的想法, 思索了一下觉得可行, 我便答应下来, 然后投入到静态题目文件自动分发插件的工作当中. 由于时间紧急就没能好好研究CTFd的文件上传与储存机制, 最开始的想法是创建一种新的挑战类型, 然后慢慢改; 后来写好之后发现数据库冲突了, 测试了好久依旧无法实现. 经Frank的提示, 发现其实只要创建一种新的flag类型即可. 时间紧急就采用了最简单的写法, 在api/v1/challenges.py里直接判断flag类型然后返回对应的文件, 简单粗暴. 这样写出来的插件由于更改了平台原有的文件, 所以没法即插即用, 等有时间了好好研究一下如何在不更改原有api的情况下实现自动分发.</p>
 <p>初赛过程中自动分发插件倒工作良好, 没出什么幺蛾子.</p>
-<p>复赛的账号分发任务交给我来做了, 采用自动注册脚本没费什么力气, 然后发送邮件拜托洛千用工具人做法全部发送到了选手的邮箱. 自动分发插件依旧沿用初赛的插件. Frank收集了所有web和pwn题目之后采用CTFd-Whale插件把题目弄成了动态的, 选手启动自己专属的docker环境做题, flag也各不相同, 防止作弊的同时也有效避免了初赛选手删flag的问题. PPC评测由于Windows下换行符CRLF的问题导致测试题目部分选手写的代码没有通过, 不过没什么大碍. 整个复赛过程中平台运行情况挺稳定的, 整个复赛过程中动态题目总共创建了487次docker环境, 其中用于测试题目创建了51次, 选手解题创建了436次, 其中陈培琛启动了35次题目环境, 杜厚德启动了32次, 陈鸿嘉启动了29次, 在&quot;浪费服务器性能排行榜&quot;上夺得前三.</p>
+<p>复赛的账号分发任务交给我来做了, 采用自动注册脚本没费什么力气, 然后发送邮件拜托洛千用工具人做法全部发送到了选手的邮箱. 自动分发插件依旧沿用初赛的插件. Frank收集了所有web和pwn题目之后采用CTFd-Whale插件把题目弄成了动态的, 选手启动自己专属的docker环境做题, flag也各不相同, 防止作弊的同时也有效避免了初赛选手删flag的问题. PPC评测由于Windows下换行符CRLF的问题导致测试题目部分选手写的代码没有通过, 不过没什么大碍. 整个复赛过程中平台运行情况挺稳定的, 整个复赛过程中动态题目总共创建了487次docker环境, 其中用于测试题目创建了51次, 选手解题创建了436次, 其中陈**启动了35次题目环境, 杜**启动了32次, 陈**启动了29次, 在&quot;浪费服务器性能排行榜&quot;上夺得前三.</p>
 <h2 id="出题与审题">出题与审题</h2>
 <p>题目很多都是让19级的学弟出的，完整的题目负责列表如下：</p>
 <table>
@@ -580,20 +580,20 @@
 
 
 
-  <link rel="preload" as="style" href="//cdn.bootcss.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+  <link rel="preload" as="style" href="https://cdn.bootcss.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
     <!-- jquery -->
  
-  <script src="//cdn.bootcss.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script> 
+  <script src="https://cdn.bootcss.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script> 
 
 
 
 
-<!-- clipboard -->
 
+  <!-- clipboard -->
   
-    <script src="//cdn.bootcss.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" crossorigin="anonymous"></script> 
+    <script src="https://cdn.bootcss.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" crossorigin="anonymous"></script> 
   
   <script type="text/javascript">
   $(function() {
@@ -618,27 +618,24 @@
 
 <script src="/js/main.js"></script>
 
-<!-- search -->
-
-<!-- Google Analytics -->
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131292248-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-131292248-2');
-    </script>
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
 
 
-<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
-<link href="//cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131292248-2"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-131292248-2');
+  </script>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+<link href="https://cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
 <style>
   .gt-comment-content:hover {
     box-shadow: none !important;
@@ -652,7 +649,7 @@
         var gitalk = document.createElement('script');
         gitalk.type = 'text/javascript';
         gitalk.async = true;
-        gitalk.src = '//cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.js';
+        gitalk.src = 'https://cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gitalk);
         gitalk.onload = function(){
             var gitalk = new Gitalk({
@@ -667,6 +664,7 @@
         };
     }());
 </script>
+
 
 </body>
 </html>

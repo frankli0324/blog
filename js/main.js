@@ -51,7 +51,7 @@ $(document).ready(function() {
       return false;
     }
     menuIcon.click(toggle);
-    toggle();
+    if (menu.css("visibility") === "hidden") toggle();
 
     /**
      * Add a scroll listener to the menu to hide/show the navigation links.
