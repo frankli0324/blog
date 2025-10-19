@@ -1,8 +1,9 @@
 ---
-title: 论mathjax踩坑
+title: 给blog添加MathJax支持时踩的坑
 date: 2019-08-07
 tags:
- - 杂项
+ - Misc
+ - DevOps
 math: false
 ---
 

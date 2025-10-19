@@ -2,7 +2,8 @@
 title: 给CTFd加上ACM评测功能
 date: 2019-07-25
 tags:
- - 杂项
+ - Misc
+ - DevOps
 ---
 
 > 闲得蛋疼.jpg

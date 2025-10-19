@@ -4,7 +4,6 @@ date: 2021-01-18 15:58:02
 tags:
     - Writeup
     - CTF
-    - \*CTF
 ---
 
 ## oh-my-note

@@ -4,7 +4,6 @@ date: 2021-5-30
 tags:
     - CTF
     - Writeup
-    - XCTF
 ---
 
 ## Prologue
