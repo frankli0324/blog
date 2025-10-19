@@ -88,7 +88,7 @@
         .card { width: calc(20% - 20px); }
     }
     .card-container { width: 90%; }
-</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -211,7 +211,7 @@
 很容易就会发现在<code>zend_startup</code>步骤中出现了<br>
 <code>zend_resolve_path = utility_functions-&gt;resolve_path_function;</code><br>
 这样的语句，交叉引用看到<code>main.c</code>中：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">php_module_startup</span><span class="params">(sapi_module_struct *sf, zend_module_entry *additional_modules, <span class="keyword">uint32_t</span> num_additional_modules)</span></span>&#123;</span><br><span class="line">    zend_utility_functions zuf;</span><br><span class="line">    ...</span><br><span class="line">    zuf.resolve_path_function = php_resolve_path_for_zend;</span><br><span class="line">    <span class="built_in">zend_startup</span>(&amp;zuf);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">php_module_startup</span><span class="params">(sapi_module_struct *sf, zend_module_entry *additional_modules, <span class="type">uint32_t</span> num_additional_modules)</span></span>&#123;</span><br><span class="line">    zend_utility_functions zuf;</span><br><span class="line">    ...</span><br><span class="line">    zuf.resolve_path_function = php_resolve_path_for_zend;</span><br><span class="line">    <span class="built_in">zend_startup</span>(&amp;zuf);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最终找到&quot;真正&quot;的<code>zend_resolve_path</code>函数，然后再琢磨一会才能找到<code>tsrm_realpath_r</code>，但是实际上这里正常的做法是动态调试。<br>
 在<code>zend_include_or_eval</code>中下断点，下在<code>zend_resolve_path</code>处，单步进入，会发现实际上走到了<code>phar_find_in_include_path</code>，原因是phar拓展拦截了<code>zend_resolve_path</code>函数（装饰器设计模式）。不过没关系，我们还是fallback到了<code>php_resolve_path_for_zend</code>。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PHP_MINIT_FUNCTION</span>(phar)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">REGISTER_INI_ENTRIES</span>();</span><br><span class="line"></span><br><span class="line">    phar_orig_compile_file = zend_compile_file;</span><br><span class="line">    zend_compile_file = phar_compile_file;</span><br><span class="line"></span><br><span class="line">    phar_save_resolve_path = zend_resolve_path;</span><br><span class="line">    zend_resolve_path = phar_resolve_path;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">phar_object_init</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">phar_intercept_functions_init</span>();</span><br><span class="line">    <span class="built_in">phar_save_orig_functions</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">php_register_url_stream_wrapper</span>(<span class="string">&quot;phar&quot;</span>, &amp;php_stream_phar_wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -225,21 +225,21 @@
 <p>梅开二度，仍然返回NULL，没抛Exception。我们跟到<code>main/streams/plain_wrapper.c</code>中看文件是如何打开的：</p>
 <img src="/2020/08/05/Security/php-src/WMCTF2020-PHP-source-analysis/open_wrapper.png" class="">
 <p>也就是说需要经过一次<code>expand_filepath</code></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">PHPAPI <span class="keyword">char</span> *<span class="title">expand_filepath</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *filepath, <span class="keyword">char</span> *real_path)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">expand_filepath_ex</span>(filepath, real_path, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">PHPAPI <span class="keyword">char</span> *<span class="title">expand_filepath_ex</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *filepath, <span class="keyword">char</span> *real_path, <span class="keyword">const</span> <span class="keyword">char</span> *relative_to, <span class="keyword">size_t</span> relative_to_len)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">expand_filepath_with_mode</span>(filepath, real_path, relative_to, relative_to_len, CWD_FILEPATH);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">PHPAPI <span class="keyword">char</span> *<span class="title">expand_filepath_with_mode</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *filepath, <span class="keyword">char</span> *real_path, <span class="keyword">const</span> <span class="keyword">char</span> *relative_to, <span class="keyword">size_t</span> relative_to_len, <span class="keyword">int</span> realpath_mode)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">virtual_file_ex</span>(&amp;new_state, filepath, <span class="literal">NULL</span>, realpath_mode)) &#123;</span><br><span class="line">        <span class="built_in">efree</span>(new_state.cwd);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">PHPAPI <span class="type">char</span> *<span class="title">expand_filepath</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *filepath, <span class="type">char</span> *real_path)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">expand_filepath_ex</span>(filepath, real_path, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">PHPAPI <span class="type">char</span> *<span class="title">expand_filepath_ex</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *filepath, <span class="type">char</span> *real_path, <span class="type">const</span> <span class="type">char</span> *relative_to, <span class="type">size_t</span> relative_to_len)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">expand_filepath_with_mode</span>(filepath, real_path, relative_to, relative_to_len, CWD_FILEPATH);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">PHPAPI <span class="type">char</span> *<span class="title">expand_filepath_with_mode</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *filepath, <span class="type">char</span> *real_path, <span class="type">const</span> <span class="type">char</span> *relative_to, <span class="type">size_t</span> relative_to_len, <span class="type">int</span> realpath_mode)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">virtual_file_ex</span>(&amp;new_state, filepath, <span class="literal">NULL</span>, realpath_mode)) &#123;</span><br><span class="line">        <span class="built_in">efree</span>(new_state.cwd);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里怎么也有个<code>virtual_file_ex</code>？我们继续走</p>
 <img src="/2020/08/05/Security/php-src/WMCTF2020-PHP-source-analysis/expand_virtual.png" class="">
 <p>竟然顺利通过了。所以我们可以得出一个小结论：是<code>virtual_file_ex</code>的不一致的表现导致了这个bug。<br>
 我们进一步来探讨一下这个不一致性是怎么产生的。</p>
 <h3 id="virtual-file-ex">virtual_file_ex</h3>
 <p>在上面的分析中，可以看到<code>tsrm_realpath</code>与<code>expand_filepath</code>在调用<code>virtual_file_ex</code>分别是这么传参的：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tsrm_realpath</span></span><br><span class="line"><span class="keyword">if</span> (virtual_file_ex(&amp;new_state, path, <span class="literal">NULL</span>, CWD_REALPATH)) &#123;...&#125;</span><br><span class="line"><span class="comment">// expand_filepath</span></span><br><span class="line"><span class="keyword">if</span> (virtual_file_ex(&amp;new_state, path, <span class="literal">NULL</span>, CWD_FILEPATH)) &#123;...&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// tsrm_realpath</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">virtual_file_ex</span>(&amp;new_state, path, <span class="literal">NULL</span>, CWD_REALPATH)) &#123;...&#125;</span><br><span class="line"><span class="comment">// expand_filepath</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">virtual_file_ex</span>(&amp;new_state, path, <span class="literal">NULL</span>, CWD_FILEPATH)) &#123;...&#125;</span><br></pre></td></tr></table></figure>
 <p>这两个宏在源码里是这么解释的：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CWD_FILEPATH 1 <span class="comment">/* resolve symlinks if file is exist otherwise expand */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CWD_REALPATH 2 <span class="comment">/* call realpath(), resolve symlinks. File must exist */</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> CWD_FILEPATH 1 <span class="comment">/* resolve symlinks if file is exist otherwise expand */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CWD_REALPATH 2 <span class="comment">/* call realpath(), resolve symlinks. File must exist */</span></span></span><br></pre></td></tr></table></figure>
 <p>二者的区别在于REALPATH调用时必须<strong>保证</strong>文件存在，不然就会直接返回</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (save &amp;&amp; <span class="built_in">php_sys_lstat</span>(path, &amp;st) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (use_realpath == CWD_REALPATH) &#123;</span><br><span class="line">        <span class="comment">/* file not found */</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">size_t</span>)<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* continue resolution anyway but don&#x27;t save result in the cache */</span></span><br><span class="line">    save = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (save &amp;&amp; <span class="built_in">php_sys_lstat</span>(path, &amp;st) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (use_realpath == CWD_REALPATH) &#123;</span><br><span class="line">        <span class="comment">/* file not found */</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="type">size_t</span>)<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* continue resolution anyway but don&#x27;t save result in the cache */</span></span><br><span class="line">    save = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="lstat">lstat</h3>
 <p>等等，它是怎么判断文件是否存在的？<code>php_sys_lstat</code>是什么？</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> php_sys_lstat lstat</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> php_sys_lstat lstat</span></span><br></pre></td></tr></table></figure>
 <p>也就是说只要<code>lstat(path)</code>小于0，PHP就会认为文件不存在，从而<code>virtual_file_ex(..., CWD_REALPATH)</code>，即<code>tsrm_realpath</code>会出问题，而<code>virtual_file_ex(..., CWD_FILEPATH)</code>虽然&quot;找不到&quot;这个文件，但仍然会返回一个合法的路径。<br>
 我们再仔细看看<a target="_blank" rel="noopener" href="https://linux.die.net/man/3/lstat">lstat在什么情况下会报错</a></p>
 <p>其中有一条就很有趣：</p>
@@ -261,18 +261,15 @@
 <li>源码分析基于PHP 7.4.5，截止<a target="_blank" rel="noopener" href="https://github.com/php/php-src/blob/44ad2db15fe786b07ce793624885e0c43e0af897/Zend/zend_virtual_cwd.c#L885">8.0.0-beta1</a> php 仍然使用lstat的返回值作为文件是否存在的依据</li>
 <li>在源码分析的过程中还有一个地方可能导致类似的问题，有兴趣的自己看，此处不点明（</li>
 </ul>
-
-<div id="gitalk-container"></div>
-<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-		<script>
-		var gitalkConfig = {"clientID":"5955d155fe2ea768241e","clientSecret":"f96bbda9ff434950217f24f7f9369f8b8de3b025","repo":"frankli0324.github.io","owner":"frankli0324","admin":["frankli0324"],"distractionFreeMode":false};
-	    gitalkConfig.id = md5(location.pathname);
-		var gitalk = new Gitalk(gitalkConfig);
-	    gitalk.render("gitalk-container");
-	    </script><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
   </div>
 </article>
+
+    <div class="blog-post-comments">
+        <div id="gitalk-container">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
 
 
 
@@ -332,7 +329,7 @@
     Copyright &copy;
     
     
-    2017-2024
+    2017-2025
     Frank Li
   </div>
   <div class="footer-right">
@@ -357,12 +354,12 @@
 
 
 
-  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+  <link rel="preload" as="style" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
     <!-- jquery -->
  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" crossorigin="anonymous"></script> 
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script> 
 
 
 
@@ -370,7 +367,7 @@
 <!-- clipboard -->
 
   
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" crossorigin="anonymous"></script> 
+    <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" crossorigin="anonymous"></script> 
   
   <script type="text/javascript">
   $(function() {
@@ -413,8 +410,37 @@
 
 <!-- Umami Analytics -->
 
-<!-- Disqus Comments -->
 
+<script src="https://cdn.bootcdn.net/blueimp-md5/2.12.0/js/md5.min.js"></script>
+<link href="https://cdn.bootcdn.net/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
+<style>
+  .gt-comment-content:hover {
+    box-shadow: none !important;
+  }
+  .gt-comment-content {
+    border-radius: 5px;
+  }
+</style>
+<script type="text/javascript">
+    (function(){
+        var gitalk = document.createElement('script');
+        gitalk.type = 'text/javascript';
+        gitalk.async = true;
+        gitalk.src = 'https://cdn.bootcdn.net/ajax/libs/gitalk/1.8.0/gitalk.min.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gitalk);
+        gitalk.onload = function(){
+            var gitalk = new Gitalk({
+                id: md5(location.pathname),
+                clientID: '5955d155fe2ea768241e',
+                clientSecret: 'f96bbda9ff434950217f24f7f9369f8b8de3b025',
+                repo: 'frankli0324.github.io',
+                owner: 'frankli0324',
+                admin: ['frankli0324'],
+            });
+            gitalk.render('gitalk-container');
+        };
+    }());
+</script>
 
 </body>
 </html>

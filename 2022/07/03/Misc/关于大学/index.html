@@ -16,8 +16,8 @@
 <meta property="article:published_time" content="2022-07-02T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-07-08T00:42:05.000Z">
 <meta property="article:author" content="Frank Li">
-<meta property="article:tag" content="杂项">
 <meta property="article:tag" content="life">
+<meta property="article:tag" content="杂项">
 <meta name="twitter:card" content="summary">
     
     
@@ -78,7 +78,7 @@
         .card { width: calc(20% - 20px); }
     }
     .card-container { width: 90%; }
-</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -231,18 +231,15 @@
 <p>俺们<em>随心所欲</em>了么？我觉得没有。我们还没来得及给自己给出答案。俺们没有一些工作了的学长的决绝，亦没有俺妈那样的阅历。或许，过两年俺们会被现实打醒回去考研吧。或许。又或许，我们会选另一条更显而易见的，仅剩的路？</p>
 <h2 id="以及很多其他的重要的事与人">以及很多其他的重要的事与人</h2>
 <p>我长久以来未曾写过些什么文字，现在也不会写。我想到些什么，便罗列在上面了。后面的几周或许会写些别的，或许不会。只是写给自己看罢了。</p>
-
-<div id="gitalk-container"></div>
-<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-		<script>
-		var gitalkConfig = {"clientID":"5955d155fe2ea768241e","clientSecret":"f96bbda9ff434950217f24f7f9369f8b8de3b025","repo":"frankli0324.github.io","owner":"frankli0324","admin":["frankli0324"],"distractionFreeMode":false};
-	    gitalkConfig.id = md5(location.pathname);
-		var gitalk = new Gitalk(gitalkConfig);
-	    gitalk.render("gitalk-container");
-	    </script><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
   </div>
 </article>
+
+    <div class="blog-post-comments">
+        <div id="gitalk-container">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
 
 
 
@@ -302,7 +299,7 @@
     Copyright &copy;
     
     
-    2017-2024
+    2017-2025
     Frank Li
   </div>
   <div class="footer-right">
@@ -327,12 +324,12 @@
 
 
 
-  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+  <link rel="preload" as="style" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
     <!-- jquery -->
  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" crossorigin="anonymous"></script> 
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script> 
 
 
 
@@ -340,7 +337,7 @@
 <!-- clipboard -->
 
   
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" crossorigin="anonymous"></script> 
+    <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" crossorigin="anonymous"></script> 
   
   <script type="text/javascript">
   $(function() {
@@ -383,8 +380,37 @@
 
 <!-- Umami Analytics -->
 
-<!-- Disqus Comments -->
 
+<script src="https://cdn.bootcdn.net/blueimp-md5/2.12.0/js/md5.min.js"></script>
+<link href="https://cdn.bootcdn.net/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
+<style>
+  .gt-comment-content:hover {
+    box-shadow: none !important;
+  }
+  .gt-comment-content {
+    border-radius: 5px;
+  }
+</style>
+<script type="text/javascript">
+    (function(){
+        var gitalk = document.createElement('script');
+        gitalk.type = 'text/javascript';
+        gitalk.async = true;
+        gitalk.src = 'https://cdn.bootcdn.net/ajax/libs/gitalk/1.8.0/gitalk.min.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gitalk);
+        gitalk.onload = function(){
+            var gitalk = new Gitalk({
+                id: md5(location.pathname),
+                clientID: '5955d155fe2ea768241e',
+                clientSecret: 'f96bbda9ff434950217f24f7f9369f8b8de3b025',
+                repo: 'frankli0324.github.io',
+                owner: 'frankli0324',
+                admin: ['frankli0324'],
+            });
+            gitalk.render('gitalk-container');
+        };
+    }());
+</script>
 
 </body>
 </html>

