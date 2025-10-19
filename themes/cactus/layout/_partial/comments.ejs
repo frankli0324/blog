@@ -1,6 +1,6 @@
-<% if(page.comments && theme.disqus.enabled){ %>
+<% if(page.comments){ %>
     <div class="blog-post-comments">
-        <div id="disqus_thread">
+        <div id="gitalk-container">
             <noscript><%= __('comments.no_js') %></noscript>
         </div>
     </div>

@@ -52,11 +52,6 @@ index_generator:
   path: ''
   per_page: 10
   order_by: -date
-  
-# Category & Tag
-default_category: uncategorized
-category_map:
-tag_map:
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
@@ -72,15 +67,7 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
-plugins:
-  gitalk:
-    clientID: 5955d155fe2ea768241e
-    clientSecret: f96bbda9ff434950217f24f7f9369f8b8de3b025
-    repo: frankli0324.github.io
-    owner: frankli0324
-    admin: 
-      - frankli0324
-    distractionFreeMode: false
+# plugins:
 
 sitemap:
   path: sitemap.xml
@@ -98,5 +85,12 @@ theme: cactus
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/frankli0324/frankli0324.github.io
+  repo: https://github.com/frankli0324/blog
   branch: master
+
+gitalk:
+  clientID: 5955d155fe2ea768241e
+  clientSecret: f96bbda9ff434950217f24f7f9369f8b8de3b025
+  repo: blog
+  owner: frankli0324
+  admin: frankli0324

@@ -61,7 +61,6 @@ post:
 # Note: if start_year/end_year not provided, will use current year.
 copyright:
   start_year: 2017
-  end_year: 2024
 
 ##############################################################################
 # Look and Feel
@@ -135,11 +134,6 @@ open_graph:
 # Plugins
 ##############################################################################
 
-# Fill in your Disqus Comments Shortname to enable Disqus comments.
-disqus:
-  enabled: false
-  shortname: cactus-1
-
 # Fill in your Google Analytics tracking ID to enable Google Analytics.
 google_analytics:
   enabled: true
@@ -171,8 +165,8 @@ gravatar:
 # loads libraries and styles from CDN instead or relying on local files
 cdn:
   enable: true
-  jquery: https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js
-  clipboard: https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js
-  font_awesome: https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css
-  justified_gallery_css: https://cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css
-  justified_gallery_js: https://cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js
+  jquery: https://cdn.bootcss.com/ajax/libs/jquery/3.7.1/jquery.min.js
+  clipboard: https://cdn.bootcss.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js
+  font_awesome: https://cdn.bootcss.com/ajax/libs/font-awesome/7.0.0/css/all.min.css
+  justified_gallery_css: https://cdn.bootcss.com/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css
+  justified_gallery_js: https://cdn.bootcss.com/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js

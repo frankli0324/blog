@@ -13,8 +13,8 @@
   <% } %> 
 <% } %>
 
-<!-- clipboard -->
 <% if (is_post()){ %>
+  <!-- clipboard -->
   <% if (isCdnEnable('clipboard')) { %>
     <%- getCdnScript('clipboard') %> 
   <% } else { %> 
@@ -41,8 +41,8 @@
   </script>
 <% } %>
 <%- js('js/main') %>
-<!-- search -->
 <% if (config.search && (page.search || page.type === "search")){ %>
+  <!-- search -->
   <%- js('js/search.js') %>
   <script type="text/javascript">
   $(function() {
@@ -80,18 +80,18 @@
   });
   </script>
 <% } %>
-<!-- Google Analytics -->
 <% if (theme.google_analytics.enabled && theme.google_analytics.id){ %>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= theme.google_analytics.id %>"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '<%= theme.google_analytics.id %>');
-    </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= theme.google_analytics.id %>"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<%= theme.google_analytics.id %>');
+  </script>
 <% } %>
-<!-- Baidu Analytics -->
 <% if (theme.baidu_analytics.enabled && theme.baidu_analytics.id){ %>
+  <!-- Baidu Analytics -->
   <script type="text/javascript">
         var _hmt = _hmt || [];
         (function() {
@@ -102,25 +102,44 @@
         })();
         </script>
 <% } %>
-<!-- Cloudflare Analytics -->
 <% if (theme.cloudflare_analytics.enabled && theme.cloudflare_analytics.id){ %>
+  <!-- Cloudflare Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "<%= theme.cloudflare_analytics.id %>"}'></script>
 <% } %>
-<!-- Umami Analytics -->
 <% if (theme.umami_analytics.enabled && theme.umami_analytics.id && theme.umami_analytics.host){ %>
+  <!-- Umami Analytics -->
   <script async defer data-website-id="<%= theme.umami_analytics.id %>" src="<%= theme.umami_analytics.host %>/umami.js"></script>
 <% } %>
-<!-- Disqus Comments -->
-<% if (theme.disqus.enabled && theme.disqus.shortname){ %>
-    <script type="text/javascript">
-        var disqus_shortname = '<%= theme.disqus.shortname %>';
 
-        (function(){
-            var dsq = document.createElement('script');
-            dsq.type = 'text/javascript';
-            dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/<% if (page.comments){ %>embed.js<% } else { %>count.js<% } %>';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        }());
-    </script>
+<% if(page.comments){ %>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+<link href="https://cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.css" rel="stylesheet">
+<style>
+  .gt-comment-content:hover {
+    box-shadow: none !important;
+  }
+  .gt-comment-content {
+    border-radius: 5px;
+  }
+</style>
+<script type="text/javascript">
+    (function(){
+        var gitalk = document.createElement('script');
+        gitalk.type = 'text/javascript';
+        gitalk.async = true;
+        gitalk.src = 'https://cdn.bootcss.com/ajax/libs/gitalk/1.8.0/gitalk.min.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gitalk);
+        gitalk.onload = function(){
+            var gitalk = new Gitalk({
+                id: md5(location.pathname),
+                clientID: '<%= config.gitalk.clientID %>',
+                clientSecret: '<%= config.gitalk.clientSecret %>',
+                repo: '<%= config.gitalk.repo %>',
+                owner: '<%= config.gitalk.owner %>',
+                admin: ['<%= config.gitalk.admin %>'],
+            });
+            gitalk.render('gitalk-container');
+        };
+    }());
+</script>
 <% } %>
